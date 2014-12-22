@@ -1,4 +1,4 @@
-$fn = 30;
+$fn = 505;
 radius = 8/2;
 h = 8;
 ww = 3; //wall width
@@ -61,7 +61,22 @@ scale([1,-1,1]) band(radius, h, ww);
 }
 }
 
-//translate([0,radius+ww*9,3*h/2]) rotate(180) rod_end_2(radius, h, ww, 4.5/2);
-//translate([0,radius+ww*5,h/2]) rod_end(radius, h, ww, 4.5/2);
-//clamp(radius, h, ww);
-translate([0,0,h/2]) rod_end_2(radius, h, ww, 4.5/2);
+module demo() {
+translate([0,radius+ww*3,h/2])
+rotate([15,0,0])
+translate([0,ww*2,0])
+{
+translate([0,ww*2,h]) rotate(160) translate([0, -ww*2, 0]) {
+rod_end_2(radius, h, ww, 4.5/2);
+#rotate([90,90,0]) cylinder(r = 4.5/2, h =50);
+}
+rod_end(radius, h, ww, 4.5/2);
+}
+clamp(radius, h, ww);
+%cylinder(r = radius, h = 20);
+}
+
+
+
+demo();
+//translate([0,0,h/2]) rod_end_2(radius, h, ww, 4.5/2);
