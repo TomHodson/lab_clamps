@@ -1,4 +1,4 @@
-$fn = 505;
+$fn = 50;
 radius = 8/2;
 h = 8;
 ww = 3; //wall width
@@ -77,6 +77,27 @@ clamp(radius, h, ww);
 }
 
 
+module table_clamp(table_h, ww, depth) {
+difference() {
+	union() {
+		cylinder(r = table_h, h = depth, center = true);
+		for(i=[+1,-1,]) translate([table_h*0.75*i,table_h*1.5/2,0]) 
+		cube([table_h/2, table_h*1.5, depth], center = true);
+		for(i=[220, 140])
+		rotate([0,0,i]) translate([0,table_h,-depth/2 + 3/2]) connector();
+		translate([0,0,4 -depth/2]) rotate([0,90,180]) translate([0,table_h,0]) connector();
+	}
+	union() {
+		cylinder(r = table_h/2, h = depth + 1, center = true);
+		translate([0,table_h,0]) cube([table_h, table_h*2, depth+1], center = true);
+		for(t = [0.3, 1.2])
+		translate([0,t*table_h,0]) rotate([0,90,0]) cylinder(r = 6.5/2, h = 100, center = true); 
 
-demo();
+	}
+}
+}
+
+table_clamp(24, 10, 15);
+
+//demo();
 //translate([0,0,h/2]) rod_end_2(radius, h, ww, 4.5/2);
